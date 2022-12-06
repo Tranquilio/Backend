@@ -66,6 +66,16 @@ router.post('/login-mongo', async (req, res, next) => {
 
 });
 
+router.post('/save-company-info', async (req, res, next) => {
+  const { email, companyName} = req.body
+  console.log("company info saved")
+  // splits = email.split("@") 
+  let db_connect = dbo.getDb();
+  //result = await db_connect.collection("emails").findOne({ domain: domain });
+  //console.log(result)
+  res.json({ message: "Company is valid" })
+});
+
 
 
 module.exports = router;
