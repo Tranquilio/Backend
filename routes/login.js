@@ -63,19 +63,63 @@ router.post('/login-mongo', async (req, res, next) => {
       console.log("1 document updated");
     });
   }
-
 });
+
+router.post('/checkId-unique', async (req, res, next) => {
+  console.log("ehhehe")
+  const { cid } = req.body
+  console.log(cid)
+  let db_connect = dbo.getDb();
+  cursor = db_connect.collection("company").find({cid: cid});
+  cursor.toArray(function (err, result) {
+      if (err) throw err;
+      output = false;
+      if(result.length == 0)
+        output = true
+      res.json(output);
+  });
+});
+
 
 router.post('/save-company-info', async (req, res, next) => {
-  const { email, companyName} = req.body
-  console.log("company info saved")
-  // splits = email.split("@") 
-  let db_connect = dbo.getDb();
-  //result = await db_connect.collection("emails").findOne({ domain: domain });
-  //console.log(result)
-  res.json({ message: "Company is valid" })
+    let db_connect = dbo.getDb();
+    const {data} = req.body
+    db_connect.collection("company").insertOne(data);
+    res.json({message: "Data has been sent"});
 });
 
+router.post('/save-profile-info', async (req, res, next) => {
+    let db_connect = dbo.getDb();
+    const {data} = req.body
+    db_connect.collection("user-profile").insertOne(data);
+    res.json({message: "Data has been sent"});
+});
 
+router.post('/obtain-company-details', async (req, res, next) => {
+  console.log("ffff")
+  const { email } = req.body
+  console.log(email)
+  let db_connect = dbo.getDb();
+  cursor = db_connect.collection("user-profile").aggregate([
+    { $match: { email: email } },
+    { $lookup: {
+        from: "company",
+        localField: "cid",
+        foreignField: "cid",
+        as: "companyinfo"
+      } },
+    /* { $unwind: "$userinfo" }, */
+  ]);
+  cursor.toArray(function (err, result) {
+    if (err) throw err;
+    console.log(result.length)
+    if (result.length != 1) {
+      res.json(null)
+    } else {
+      console.log(result[0])
+      res.json(result[0]);
+    }
+});
+});
 
 module.exports = router;

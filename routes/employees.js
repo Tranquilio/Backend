@@ -107,15 +107,18 @@ employeeRoutes.route("/api/employees/scores/all").get(function (req, res) {
 
 employeeRoutes.route("/api/employees/scores/:id").get(function (req, res) {
     let db_connect = dbo.getDb();
-    cursor = db_connect.collection("typeform-response").aggregate([
-        { $match: { companyName: req.params.id } },
-        { $group: { _id: null, average: { $avg: "$averageScore" } } },
-    ]);
+    cursor = db_connect.collection("employee-insights").aggregate([
+        { $match: {
+            cid: req.params.id
+        },},
+        { $group: { _id: null, average: { $avg: "$score" } } },
+    ]);;
     cursor.toArray(function (err, result) {
         if (err) throw err;
-        res.json({ "Average Score": result[0].average * 100 / 6 });
+        res.json(result[0]);
     });
 });
+
 
 //Json -> {deptname : score}
 employeeRoutes.route("/api/employees/dept/all").get(function (req, res) {
