@@ -8,6 +8,7 @@ const fetch = (...args) =>
 // The router will be added as a middleware and will take control of requests 
 const typeformRoutes = express.Router();
 
+//Edit and make sure is proper
 typeformRoutes.route("/api/typeform/generate").post(async function (req, res) {
   const { companyname, text, title } = req.body
 

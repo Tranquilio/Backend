@@ -122,4 +122,21 @@ router.post('/obtain-company-details', async (req, res, next) => {
 });
 });
 
+//Template assessments
+//Do not show status(Assessments)
+//Automated status (All statuses)
+
+
+router.post('/write-company-details', async (req, res, next) => {
+  const { cid, data } = req.body
+  console.log(cid)
+  let db_connect = dbo.getDb();
+  myquery = { cid: cid };
+  cursor = db_connect.collection("company").replaceOne(myquery, data, function (err, res) {
+    if (err) throw err;
+    console.log("1 document updated");
+  });
+  res.json("Successfully replaced the details")
+});
+
 module.exports = router;
