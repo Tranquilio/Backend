@@ -18,13 +18,13 @@ app.use(require("./routes/scores"));
 app.use(require("./routes/employees"));
 // get driver connection
 const dbo = require("./conn");
- 
-app.listen(port, () => {
-  // perform a database connection when server starts
-  dbo.connectToServer(function (err) {
-    if (err) console.error(err);
-  });
-  console.log(`Server is running on port: ${port}`);
-}); 
 
-//module.exports = app;
+//app.listen(port, () => {
+// perform a database connection when server starts
+dbo.connectToServer(function (err) {
+  if (err) console.error(err);
+});
+//  console.log(`Server is running on port: ${port}`);
+//}); 
+
+module.exports = app;
