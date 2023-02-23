@@ -12,7 +12,7 @@ const dbo = require("../conn");
 const { PRIVATE_KEY, NODEMAILER_EMAIL, NODEMAILER_PASSWORD, EMAIL_VERIFIER_API_KEY } = process.env
 // console.log(process.env)
 
-router.post('/', (req, res, next) => {
+router.get('/', (req, res, next) => {
   res.json({ message: "Default message!" })
 })
 
