@@ -12,8 +12,8 @@ const dbo = require("../conn");
 const { PRIVATE_KEY, NODEMAILER_EMAIL, NODEMAILER_PASSWORD, EMAIL_VERIFIER_API_KEY } = process.env
 // console.log(process.env)
 
-router.get('/', (req, res, next) => {
-  res.json({ message: "Default message!" })
+router.post('/test-endpoint', (req, res, next) => {
+  res.json({ message: "Default message for test-endpoint!" })
 })
 
 router.post('/verify-email-address', (req, res, next) => {

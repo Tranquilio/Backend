@@ -9,12 +9,8 @@ Content-Type: application/json
 }
 
 ###
-POST https://55o91qpfqi.execute-api.ap-southeast-1.amazonaws.com/dev/verify-dev-name
-Content-Type: application/json
+GET https://55o91qpfqi.execute-api.ap-southeast-1.amazonaws.com/dev/
 
-{
-    "name": "VISHAL3415"
-}
 
 ###
 POST http://localhost:5000/login-init
