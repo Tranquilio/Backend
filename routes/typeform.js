@@ -55,7 +55,25 @@ typeformRoutes.route("/api/typeform/generate").post(async function (req, res) {
 //   result.json().then((out) => res.json(out))
 // });
 
-typeformRoutes.route("/api/typeform/getres").get(async function (req, res) {
+typeformRoutes.get("/api/typeform/getresult", async (req, res) => {
+  try {
+    const apiKey = 'tfp_57VYm1iUBg8iFzX21vEdmfwNLLARx3H1ukQMRNRdcBMH_3w5rBQWRVcFkN9';
+    const formId = 'vL8do7c1';
+    const response = await fetch(`https://api.typeform.com/forms/${formId}/responses`, {
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+    });
+    const data = await response.json()
+    res.json(data);
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+/* typeformRoutes.route("/api/typeform/getres").get(async function (req, res) {
   const result = await fetch("https://api.typeform.com/forms/PqwjqxXz/responses", {
     method: 'GET',
     headers: {
@@ -65,28 +83,28 @@ typeformRoutes.route("/api/typeform/getres").get(async function (req, res) {
   })
 
   result.json().then((out) => res.json(out))
-});
+}); */
 
 typeformRoutes.route("/api/typeform/checkExisting/:id").get(async function (req, res) {
-  const {companyname, link} = req.body
+  const { companyname, link } = req.body
   let db = getDb()
 
-  cursor = db.collection("surveys").find({company: req.params.id})
+  cursor = db.collection("surveys").find({ company: req.params.id })
   cursor.toArray(function (err, result) {
     if (err) throw err;
-    res.json({result});
+    res.json({ result });
   });
 });
 
 typeformRoutes.route("/api/typeform/save").post(async function (req, res) {
-  const {companyName, link} = req.body
+  const { companyName, link } = req.body
   let db = getDb()
 
-  db.collection("surveys").insertOne({company: companyName, "survey_link": link})
+  db.collection("surveys").insertOne({ company: companyName, "survey_link": link })
   cursor = db.collection("surveys").find({})
   cursor.toArray(function (err, result) {
     if (err) throw err;
-    res.json({result});
+    res.json({ result });
   });
 });
 

@@ -20,3 +20,4 @@ jobs:
           npm ci
       - name: deploy
         run: |
+          tar -a -c -f LambdaBackend.zip .github controllers helpers routes .env .gitignore conn.js form-body.js lambda.js package.json package-lock.json request.rest server.js node_modules
