@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const loginRoutes = require('./routes/login');
 const authRoutes = require('./routes/auth')
+const assessmentRoutes = require('./routes/assessment')
 const app = express();
 const cors = require("cors");
 //Write config variables here
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(loginRoutes)
 app.use(authRoutes)
+app.use(assessmentRoutes)
 app.use(require("./routes/questions"));
 app.use(require("./routes/typeform"));
 app.use(require("./routes/scores"));

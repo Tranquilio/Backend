@@ -1,11 +1,17 @@
-GET http://localhost:5000/
-
+GET http://localhost:5000/get-user-onboarding-data/Arvind
 ###
-POST http://localhost:5000/generate-redirect-token
+POST http://localhost:5000/set-user-onboarding-data
 Content-Type: application/json
 
 {
-    "email": "thevishet@gmail.com"
+    "email": "rr@aee.com",
+    "name": "Vishal",
+    "age": "23",
+    "industry": "tech",
+    "seniority": "1-2 yrs",
+    "uid": "2",
+    "country": "sg",
+    "role": "hgvgh"
 }
 
 ###
